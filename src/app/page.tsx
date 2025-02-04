@@ -1,101 +1,93 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import {FormEvent, useState} from "react";
+import Modal from "@/app/components/modal";
+import {invalidMessages} from "@/app/utils/messages";
+
+export default function Home() { // Coloca el hook aquí, siempre debe estar en el mismo orden
+  const backgroundImage = "/images/globos.png";
+  const message = invalidMessages[Math.floor(Math.random() * invalidMessages.length)];
+  const clue = "Para entrar a mi corazón debes ingresar: (nombre de tu noviecito)meamamucho";
+  const [isInvalidUser, setIsInvalidUser] = useState(false)
+  const [showClue, setShowClue] = useState(false);
+
+  const closeModal = () => {
+    setIsInvalidUser(false);
+    setShowClue(false);
+  }
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({username, password}),
+    });
+
+    if (response.ok) {
+      window.location.href = "/peticion";
+    } else {
+      setIsInvalidUser(true);
+    }
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div
+      className="relative min-h-screen bg-cover bg-center"
+      style={{backgroundImage: `url(${backgroundImage})`}}
+    >
+      {isInvalidUser && <Modal message={message} closeModal={closeModal}/>}
+      {showClue && <Modal message={clue} closeModal={closeModal}/>}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      <div className="absolute inset-0 "></div>
+      <div className="relative z-10 flex items-center justify-center h-full text-white flex flex-col">
+        <h1 className="font-cursive text-red-600 text-3xl text-center m-5">Mi bella María Josesita, por favor
+          ingrese.</h1>
+        {/*  create a div with other background image*/}
+        <div className="relative bg-contain bg-center w-full h-auto">
+          <form onSubmit={onSubmit} className="flex flex-col align-middle justify-center space-y-2">
+            <label htmlFor="username" className="text-red-600 font-serif text-center font-bold">El nombre del amor de mi
+              bida</label>
+            <input
+              type="text"
+              id="username"
+              className="p-1 mx-20 h-10 rounded-2xl bg-pink-600 text-center"
+              value={"María Josésita"}
+              readOnly={true}
+              name="username"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <label htmlFor="password" className="text-red-600 font-serif text-center font-bold">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              className="p-1 mx-20 h-10 rounded-2xl bg-pink-600 text-center selection:border-white"
+              name="password"
+            />
+            <div className={"flex justify-center"}>
+              <button
+                type="submit"
+                className="relative w-32 h-24 bg-pink-400 text-white text-xl font-bold
+             flex items-center justify-center text-center transition-all duration-300 font-cursive
+             hover:bg-pink-500 active:scale-95"
+                style={{
+                  clipPath:
+                    "path('M 65 12 C 80 -8, 125 0, 115 35 C 110 60, 65 95, 65 95 C 65 95, 20 60, 15 35 C 5 0, 50 -8, 65 12 Z')",
+                }}
+              >
+                Te amo
+              </button>
+            </div>
+            {/*  add forgot password question*/}
+            <a href="#" onClick={() => setShowClue(true)} aria-readonly={isInvalidUser || showClue ? "true" : "false"}
+             className="text-pink-600 font-serif text-center font-bold">¿Un pista para ingresar?</a>
+          </form>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
