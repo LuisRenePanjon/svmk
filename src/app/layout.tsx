@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import {Dancing_Script, Great_Vibes, Pangolin} from "next/font/google";
+import {Dancing_Script, Great_Vibes} from "next/font/google";
 import "./globals.css";
-
-// const greatVibes = Great_Vibes({
-//   subsets: ['latin'], // Incluye solo caracteres necesarios
-//   weight: '400', // Especifica los pesos que vas a usar
-//   variable: '--font-great-vibes', // Define una variable CSS
-// });
 
 const greatVibes = Great_Vibes({
   subsets: ['latin'], // Incluye solo caracteres necesarios
