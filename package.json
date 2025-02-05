@@ -13,6 +13,7 @@
     "@supabase/supabase-js": "^2.48.1",
     "framer-motion": "^12.3.1",
     "next": "^15.1.6",
+    "pspdfkit": "^2024.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

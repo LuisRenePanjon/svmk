@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/app/utils/supabase/server";
 import { localImages } from "@/app/utils/localImages";
 import Image from "next/image";
-import FloatingButton from "@/app/components/floatingButton";
+import PdfShower from "@/app/components/pdfShower";
 
 const groupImages = (images: string[], size: number) => {
   const grouped = [];
@@ -23,7 +23,7 @@ const Peticion = async () => {
 
   return (
     <div className="relative w-screen h-screen">
-      <FloatingButton />
+      <PdfShower />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {groupedImages.map((group, index) => (
           <div key={index} className="grid gap-4">

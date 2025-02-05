@@ -3,7 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const FloatingButton = () => {
+interface FloatingButtonProps {
+  onClick: () => void;
+}
+
+const FloatingButton = ({onClick}:FloatingButtonProps) => {
   const [position, setPosition] = useState({ x: 100, y: 100 });
 
   useEffect(() => {
@@ -21,6 +25,7 @@ const FloatingButton = () => {
 
   return (
     <motion.button
+      onClick={onClick}
       type="button"
       className="fixed w-32 h-24 bg-red-600 text-white text-lg flex items-center
                  justify-center text-center transition-all duration-300 font-cursive
