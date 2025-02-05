@@ -3,6 +3,7 @@
 import {FormEvent, useState} from "react";
 import Modal from "@/app/components/modal";
 import {invalidMessages} from "@/app/utils/messages";
+import {useRouter} from "next/navigation";
 
 export default function Home() { // Coloca el hook aquí, siempre debe estar en el mismo orden
   const backgroundImage = "/images/globos.png";
@@ -10,6 +11,7 @@ export default function Home() { // Coloca el hook aquí, siempre debe estar en 
   const clue = "Para entrar a mi corazón debes ingresar: (nombre de tu noviecito)meamamucho";
   const [isInvalidUser, setIsInvalidUser] = useState(false)
   const [showClue, setShowClue] = useState(false);
+  const router = useRouter();
 
   const closeModal = () => {
     setIsInvalidUser(false);
@@ -30,7 +32,7 @@ export default function Home() { // Coloca el hook aquí, siempre debe estar en 
     });
 
     if (response.ok) {
-      window.location.href = "/peticion";
+      router.push("/peticion");
     } else {
       setIsInvalidUser(true);
     }
