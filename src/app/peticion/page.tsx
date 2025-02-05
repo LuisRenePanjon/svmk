@@ -1,9 +1,8 @@
-import React from 'react';
-
-import {redirect} from "next/navigation";
-import {createClient} from "@/app/utils/supabase/server";
-import {localImages} from "@/app/utils/localImages";
+import { redirect } from "next/navigation";
+import { createClient } from "@/app/utils/supabase/server";
+import { localImages } from "@/app/utils/localImages";
 import Image from "next/image";
+import FloatingButton from "@/app/components/floatingButton";
 
 const groupImages = (images: string[], size: number) => {
   const grouped = [];
@@ -14,27 +13,34 @@ const groupImages = (images: string[], size: number) => {
 };
 
 const Peticion = async () => {
-  const supabase = await createClient()
-
-  const { data, error } = await supabase.auth.getUser()
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
-    redirect('/')
+    redirect("/");
   }
 
   const groupedImages = groupImages(localImages, 3);
 
-
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {groupedImages.map((group, index) => (
-        <div key={index} className="grid gap-4">
-          {group.map((image, imgIndex) => (
-            <div key={imgIndex}>
-              <Image className="h-auto max-w-full rounded-lg" src={image} alt="" width={250} height={200}/>
-            </div>
-          ))}
-        </div>
-      ))}
+    <div className="relative w-screen h-screen overflow-hidden">
+      <FloatingButton /> {/* Llamamos al botón flotante */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {groupedImages.map((group, index) => (
+          <div key={index} className="grid gap-4">
+            {group.map((image, imgIndex) => (
+              <div key={imgIndex}>
+                <Image
+                  className="h-auto max-w-full rounded-lg"
+                  src={image}
+                  alt=""
+                  width={250}
+                  height={200}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
