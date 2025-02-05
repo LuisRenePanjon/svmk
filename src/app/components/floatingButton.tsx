@@ -3,11 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-interface FloatingButtonProps {
-  onClick: () => void;
-}
 
-const FloatingButton = ({onClick}:FloatingButtonProps) => {
+const FloatingButton = () => {
+
+  const pdfUrl = "/documents/letter.pdf";
   const [position, setPosition] = useState({ x: 100, y: 100 });
 
   useEffect(() => {
@@ -25,7 +24,9 @@ const FloatingButton = ({onClick}:FloatingButtonProps) => {
 
   return (
     <motion.button
-      onClick={onClick}
+      onClick={() => {
+        window.open(pdfUrl, "_blank");
+      }}
       type="button"
       className="fixed w-32 h-24 bg-red-600 text-white text-lg flex items-center
                  justify-center text-center transition-all duration-300 font-cursive
