@@ -22,8 +22,8 @@ const Peticion = async () => {
   const groupedImages = groupImages(localImages, 3);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
-      <FloatingButton /> {/* Llamamos al botón flotante */}
+    <div className="relative w-screen h-screen">
+      <FloatingButton />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {groupedImages.map((group, index) => (
           <div key={index} className="grid gap-4">
