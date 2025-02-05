@@ -7,12 +7,14 @@ const FloatingButton = () => {
   const [position, setPosition] = useState({ x: 100, y: 100 });
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updatePosition = () => {
       setPosition({
-        x: Math.random() * window.innerWidth * 1,
-        y: Math.random() * window.innerHeight * 0.8,
+        x: Math.random() * (window.innerWidth - 150), // Evita que salga de la pantalla
+        y: Math.random() * (window.innerHeight - 100),
       });
-    }, 1); // Cambia la posición cada 2 segundos
+    };
+
+    const interval = setInterval(updatePosition, 600); // Cambia la posición cada 1.5s
 
     return () => clearInterval(interval);
   }, []);
@@ -20,7 +22,7 @@ const FloatingButton = () => {
   return (
     <motion.button
       type="button"
-      className="fixed w-32 h-24 bg-pink-400 text-white text-lg  flex items-center
+      className="fixed w-32 h-24 bg-pink-400 text-white text-lg flex items-center
                  justify-center text-center transition-all duration-300 font-cursive
                  hover:bg-pink-500 active:scale-95"
       style={{
@@ -30,10 +32,10 @@ const FloatingButton = () => {
       animate={{
         x: position.x,
         y: position.y,
-        rotate: [0, 360], // Rotación completa
       }}
       transition={{
-        ease: "easeInOut",
+        x: { duration: 1.5, ease: "easeInOut" },
+        y: { duration: 1.5, ease: "easeInOut" },
       }}
     >
       Presioname
