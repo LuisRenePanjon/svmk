@@ -14,7 +14,7 @@ const FloatingButton = () => {
       });
     };
 
-    const interval = setInterval(updatePosition, 600); // Cambia la posición cada 1.5s
+    const interval = setInterval(updatePosition, 1500); // Cambia la posición cada 1.5s
 
     return () => clearInterval(interval);
   }, []);
@@ -22,9 +22,9 @@ const FloatingButton = () => {
   return (
     <motion.button
       type="button"
-      className="fixed w-32 h-24 bg-pink-400 text-white text-lg flex items-center
+      className="fixed w-32 h-24 bg-red-600 text-white text-lg flex items-center
                  justify-center text-center transition-all duration-300 font-cursive
-                 hover:bg-pink-500 active:scale-95"
+                 hover:bg-red-800 active:scale-95"
       style={{
         clipPath:
           "path('M 65 12 C 80 -8, 125 0, 115 35 C 110 60, 65 95, 65 95 C 65 95, 20 60, 15 35 C 5 0, 50 -8, 65 12 Z')",
@@ -32,10 +32,14 @@ const FloatingButton = () => {
       animate={{
         x: position.x,
         y: position.y,
+        scale: [1, 2, 1], // Efecto de latido (zoom in y out)
+        translateY: [0, -10, 0], // Elevación sutil
       }}
       transition={{
         x: { duration: 1.5, ease: "easeInOut" },
         y: { duration: 1.5, ease: "easeInOut" },
+        scale: { duration: 0.6, ease: "easeInOut", repeat: Infinity }, // Latido constante
+        translateY: { duration: 0.6, ease: "easeInOut", repeat: Infinity }, // Elevación rítmica
       }}
     >
       Presioname
