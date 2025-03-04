@@ -32,7 +32,7 @@ export default function Home() { // Coloca el hook aquí, siempre debe estar en 
     });
 
     if (response.ok) {
-      router.push("/peticion");
+      router.push("/dates");
     } else {
       setIsInvalidUser(true);
     }
@@ -47,7 +47,7 @@ export default function Home() { // Coloca el hook aquí, siempre debe estar en 
       {showClue && <Modal message={clue} closeModal={closeModal}/>}
 
       <div className="absolute inset-0 "></div>
-      <div className="relative z-10 flex items-center justify-center h-full text-white flex flex-col">
+      <div className="relative z-10 items-center justify-center h-full text-white flex flex-col">
         <h1 className="font-cursive text-red-600 text-3xl text-center m-5">Mi bella María Josesita, por favor
           ingrese.</h1>
         {/*  create a div with other background image*/}
