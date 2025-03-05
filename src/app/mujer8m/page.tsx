@@ -1,9 +1,26 @@
 "use client";
 import { motion } from "framer-motion";
+import Confetti from 'react-confetti'
+import {useState} from "react";
 
 const Mujer8M = () => {
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [running, setRunning] = useState(false);
+  const onPlayMusic = () => {
+    setRunning(true);
+    setShowConfetti(true);
+  }
+
+  const onPauseMusic = () => {
+    setRunning(false);
+  }
+
+
   return (
-    <div className="relative bg-cover bg-center h-[80vh]">
+    <div className="relative bg-cover bg-center h-[100vh]">
+      {showConfetti && <Confetti numberOfPieces={running ? 200 : 10}
+      colors={["#682184", "#F4A100", "#1A5276", "#e069a0", "#ffffff"]}
+      />}
       {/* Video de fondo */}
       <video
         className="absolute inset-0 h-full object-cover"
@@ -12,7 +29,7 @@ const Mujer8M = () => {
         muted
         playsInline
       >
-        <source src="/videos/flores.mp4" type="video/mp4" />
+        <source src="/videos/miles_girasoles.mp4" type="video/mp4" />
         Tu navegador no soporta el formato de video.
       </video>
 
@@ -43,8 +60,8 @@ const Mujer8M = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 2 }}
         >
-          <audio controls className="w-full max-w-md mx-auto">
-            <source src="/songs/eres_mi_cancion.mp3" type="audio/mp3" />
+          <audio controls className="w-full max-w-md mx-auto" onPlay={onPlayMusic} onPause={onPauseMusic}>
+            <source src="/songs/un_regalo_de_dios.mp3" type="audio/mp3" />
             Tu navegador no soporta el elemento de audio.
           </audio>
         </motion.div>
