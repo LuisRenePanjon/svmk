@@ -39,11 +39,12 @@ const dates: {
 const Dates = () => {
   //   Create a div with cards for each date
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gradient-to-br from-purple-900 via-red-600 to-pink-600">
+      <h1 className="text-4xl text-center font-bold font-cursive text-white p-2">Nuestros recuerdos</h1>
       {dates.map((date, index) => (
         <div
           key={index}
-          className="rounded-2xl shadow-2xl mx-4 my-1 p-2"
+          className="rounded-2xl shadow-2xl mx-6 my-4 p-3"
           style={{ backgroundColor: date.backgroundColor, color: date.fontColor }} // Aquí aplicamos los colores dinámicos
         >
           <div className="rounded-lg overflow-hidden shadow-lg">
