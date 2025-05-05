@@ -33,7 +33,7 @@ const DotsCalendar = () => {
   const renderTitle = () => {
     if (viewMode === 'day') return format(currentDate, 'MMMM yyyy');
     if (viewMode === 'month') return format(currentDate, 'yyyy');
-    if (viewMode === 'year') return `${Math.floor(currentDate.getFullYear() / 10) * 10} – ${Math.floor(currentDate.getFullYear() / 10) * 10 + 9}`;
+    if (viewMode === 'year') return `${Math.floor(currentDate.getFullYear())} - ${Math.floor(currentDate.getFullYear() + 9)}`;
   };
 
   return (
@@ -69,6 +69,7 @@ const DotsCalendar = () => {
             setCurrentDate(year);
             setViewMode('month');
           }}
+          events={EventsWithMyLove}
           className="grid-cols-1 gap-1"  // Pasa las clases aquí
         />
       )}
