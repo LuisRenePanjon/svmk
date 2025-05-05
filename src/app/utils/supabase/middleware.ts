@@ -37,9 +37,14 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  const omittedApi = [
+    '/api/login',
+    ];
+
   if (
-    !user &&
-    request.nextUrl.pathname != "/"
+    omittedApi.some((path) => request.nextUrl.pathname.startsWith(`/${path}`)) ||
+    (!user &&
+    request.nextUrl.pathname != "/")
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
