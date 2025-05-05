@@ -40,9 +40,9 @@ export async function updateSession(request: NextRequest) {
   const omittedApi = [
     '/api/login',
     ];
-
+  const isOmittedApi = omittedApi.some((route) => request.nextUrl.pathname.startsWith(route));
   if (
-    omittedApi.some((path) => request.nextUrl.pathname.startsWith(`/${path}`)) ||
+    !isOmittedApi &&
     (!user &&
     request.nextUrl.pathname != "/")
   ) {
